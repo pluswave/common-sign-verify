@@ -1,6 +1,6 @@
 'use strict'
 
-const bitcoinjs = require('bitcoinjs');
+const bitcoinjs = require('bitcoinjs-lib');
 const wif = require('wif');
 const common = require('./common');
 
@@ -17,11 +17,13 @@ function sign(m, wifString)
 function verify(m, sig, address, network)
 // m: message to be signed
 // sig: hex encoded signature
-// address: eth address
+// address: btc address start with 1
+// network: bitcoin testnet
 {
     network = network || 'bitcoin';
+    network = bitcoinjs.networks[network];
     var pubkey = common.recoverPubkey(m, sig);
-    var ecpair = ECPair.fromPublicKeyBuffer(new Buffer(pubkey, 'hex'), network);
+    var ecpair = bitcoinjs.ECPair.fromPublicKeyBuffer(new Buffer(pubkey, 'hex'), network);
     ecpair.compressed = true;
     var address_to_verified = ecpair.getAddress();
     if( address_to_verified != address ) {

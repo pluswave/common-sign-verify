@@ -1,4 +1,4 @@
-# General Idea to identify a user of some blockchain.
+# General library to identify a user of some blockchain.
 
 
 ## Sign process
