@@ -23,9 +23,9 @@ function verify(m, sig, address, network)
     network = network || 'bitcoin';
     network = bitcoinjs.networks[network];
     var pubkey = common.recoverPubkey(m, sig);
-    var ecpair = bitcoinjs.ECPair.fromPublicKeyBuffer(new Buffer(pubkey, 'hex'), network);
-    ecpair.compressed = true;
-    var address_to_verified = ecpair.getAddress();
+    var ecpair = bitcoinjs.ECPair.fromPublicKey(new Buffer(pubkey, 'hex'), network);
+    var address_to_verified = bitcoinjs.payments.p2pkh( { pubkey: ecpair.publicKey }).address;
+
     if( address_to_verified != address ) {
         return false;
     }

@@ -5,7 +5,7 @@ const btclib = require('./btc-lib');
 var ecpair = btcjs.ECPair.makeRandom();
 
 var wifString = ecpair.toWIF();
-var address = ecpair.getAddress();
+var address = btcjs.payments.p2pkh( { pubkey: ecpair.publicKey }).address;
 
 console.log(wifString);
 console.log(address);
